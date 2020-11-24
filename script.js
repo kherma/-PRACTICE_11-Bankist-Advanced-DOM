@@ -9,6 +9,10 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const sectionOne = document.querySelector('#section--1');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+const nav = document.querySelector('.nav');
 
 ///////////////////////////////////////
 // CODE - BEGINNING
@@ -38,10 +42,12 @@ document.addEventListener('keydown', function (e) {
 ///////////////////////////////////////
 // CODE - ADDED
 
+// Hero button scroll
 btnScrollTo.addEventListener('click', function (event) {
   sectionOne.scrollIntoView({ behavior: 'smooth' });
 });
 
+// Navigation 'to-section' scroll
 document
   .querySelector('.nav__links')
   .addEventListener('click', function (event) {
@@ -52,10 +58,7 @@ document
     }
   });
 
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
-
+// Operations tabs switching
 tabsContainer.addEventListener('click', function (event) {
   const clicked = event.target.closest('.operations__tab');
 
@@ -78,3 +81,20 @@ tabsContainer.addEventListener('click', function (event) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+// Menu fade animation
+const menuFade = function (value, event) {
+  if (event.target.classList.contains('nav__link')) {
+    const link = event.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('.nav__logo');
+    siblings.forEach(elem => {
+      if (elem !== link) {
+        elem.style.opacity = `${value}`;
+        logo.style.opacity = `${value}`;
+      }
+    });
+  }
+};
+nav.addEventListener('mouseover', menuFade.bind(this, 0.5));
+nav.addEventListener('mouseout', menuFade.bind(this, 1));
