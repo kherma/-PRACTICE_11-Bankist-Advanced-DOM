@@ -13,6 +13,7 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
+const header = document.querySelector('.header');
 
 ///////////////////////////////////////
 // CODE - BEGINNING
@@ -98,3 +99,22 @@ const menuFade = function (value, event) {
 };
 nav.addEventListener('mouseover', menuFade.bind(this, 0.5));
 nav.addEventListener('mouseout', menuFade.bind(this, 1));
+
+// Sticky navigation
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+};
+
+const options = {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${nav.getBoundingClientRect().height}px`,
+};
+const headerPbserver = new IntersectionObserver(stickyNav, options);
+headerPbserver.observe(header);
