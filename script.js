@@ -103,7 +103,6 @@ nav.addEventListener('mouseout', menuFade.bind(this, 1));
 // Sticky navigation
 const stickyNav = function (entries) {
   const [entry] = entries;
-  console.log(entry);
   if (!entry.isIntersecting) {
     nav.classList.add('sticky');
   } else {
@@ -116,5 +115,25 @@ const options = {
   threshold: 0,
   rootMargin: `-${nav.getBoundingClientRect().height}px`,
 };
-const headerPbserver = new IntersectionObserver(stickyNav, options);
-headerPbserver.observe(header);
+const headerObserver = new IntersectionObserver(stickyNav, options);
+headerObserver.observe(header);
+
+// Reveal sections
+const allSections = document.querySelectorAll('.section');
+
+const revealSections = function (entries, observer) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  sectionObserver.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSections, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(function (section) {
+  section.classList.add('section--hidden');
+  sectionObserver.observe(section);
+});
