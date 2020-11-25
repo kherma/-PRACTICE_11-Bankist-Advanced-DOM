@@ -124,24 +124,24 @@ const headerObserver = new IntersectionObserver(stickyNav, options);
 headerObserver.observe(header);
 
 // Reveal sections
-// const allSections = document.querySelectorAll('.section');
+const allSections = document.querySelectorAll('.section');
 
-// const revealSections = function (entries, observer) {
-//   const [entry] = entries;
-//   if (!entry.isIntersecting) return;
-//   entry.target.classList.remove('section--hidden');
-//   observer.unobserve(entry.target);
-// };
+const revealSections = function (entries, observer) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
 
-// const sectionObserver = new IntersectionObserver(revealSections, {
-//   root: null,
-//   threshold: 0.15,
-// });
+const sectionObserver = new IntersectionObserver(revealSections, {
+  root: null,
+  threshold: 0.15,
+});
 
-// allSections.forEach(function (section) {
-//   section.classList.add('section--hidden');
-//   sectionObserver.observe(section);
-// });
+allSections.forEach(function (section) {
+  section.classList.add('section--hidden');
+  sectionObserver.observe(section);
+});
 
 // Lazy loading images
 const loadImage = function (entries, observer) {
